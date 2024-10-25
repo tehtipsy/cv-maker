@@ -8,14 +8,23 @@ export function Footer() {
         href="https://nextjs.org/"
         target="_blank"
         rel="noopener noreferrer"
-      >Powered By <Image
+      >Powered By
+      <Image
         className="dark:invert"
         src="/next.svg"
         alt="Next.js logo"
         width={72}
         height={24}
         priority
-        />
+      />
+      <Image
+          className="dark:invert"
+          src="/vercel.svg"
+          alt="Next.js logo"
+          width={24}
+          height={22}
+          priority
+      />
       </a>
       <a
         className="flex items-center gap-2 hover:underline hover:underline-offset-4"

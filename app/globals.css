@@ -70,3 +70,7 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+[data-swapy-item].swapy-dragging {
+  @apply opacity-50 bg-gray-100 shadow-lg;
+}

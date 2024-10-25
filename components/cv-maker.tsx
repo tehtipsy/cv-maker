@@ -10,27 +10,37 @@ import {
 } from "lucide-react"
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import ReactMarkdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
+
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import CVPreview from "@/components/ui/cv-preview"
 
-type Field = {
+export type Field = {
   id: string
   name: string
   value: string
+  icon: string
 }
 
-type Section = {
+export type Section = {
   id: string
   title: string
   content: string
+  icon: string
 }
 
-type Template = "professional" | "creative" | "academic"
+export type Template = "professional" | "creative" | "academic"
+
+enum PreviewIcons {
+  file = '/file.svg',
+  window = '/window.svg',
+  globe = '/globe.svg',
+  next = '/next.svg',
+  vercel = '/vercel.svg',
+}
 
 const RichTextEditor = ({ content, onChange }: { content: string, onChange: (content: string) => void }) => {
   const editor = useEditor({
@@ -89,52 +99,45 @@ const RichTextEditor = ({ content, onChange }: { content: string, onChange: (con
   )
 }
 
-const CVPreview = ({ fields, sections, template }: { fields: Field[], sections: Section[], template: Template }) => {
-  return (
-    <div className={`p-6 border rounded-lg ${template === 'professional' ? 'bg-white' : template === 'creative' ? 'bg-gray-100' : 'bg-blue-50'}`}>
-      <h2 className="text-2xl font-bold mb-4">CV Preview</h2>
-      <div className="space-y-4">
-        {fields.map((field) => (
-          <div key={field.id}>
-            <strong>{field.name}:</strong> {field.value}
-          </div>
-        ))}
-        {sections.map((section) => (
-          <div key={section.id}>
-            <h3 className="text-xl font-semibold mt-4 mb-2">{section.title}</h3>
-            <ReactMarkdown
-              remarkPlugins={[remarkGfm]}
-              components={{
-                h1: ({ ...props }) => <h1 className="text-2xl font-bold mt-4 mb-2" {...props} />,
-                h2: ({ ...props }) => <h2 className="text-xl font-semibold mt-3 mb-2" {...props} />,
-                h3: ({ ...props }) => <h3 className="text-lg font-medium mt-2 mb-1" {...props} />,
-                ul: ({ ...props }) => <ul className="list-disc list-outside pl-5 mb-2" {...props} />,
-                ol: ({ ...props }) => <ol className="list-decimal list-outside pl-5 mb-2" {...props} />,
-                li: ({ ...props }) => <li className="mb-1" {...props} />,
-                p: ({ ...props }) => <p className="mb-2" {...props} />,
-                a: ({ ...props }) => <a className="text-blue-600 hover:underline" {...props} />,
-              }}
-            >
-              {section.content}
-            </ReactMarkdown>
-          </div>
-        ))}
-      </div>
-    </div>
-  )
-}
+const mandatoryFields = [
+  { id: "1", name: "Full Name", value: "", icon: PreviewIcons.file },
+  { id: "2", name: "Email", value: "", icon: PreviewIcons.window },
+  { id: "3", name: "Phone", value: "", icon: PreviewIcons.globe },
+]
+
+const optionalFields = [
+  { id: "4", name: "Location", value: "", icon: PreviewIcons.globe },
+  { id: "5", name: "Git", value: "", icon: PreviewIcons.globe },
+  { id: "6", name: "Meta", value: "", icon: PreviewIcons.globe },
+  { id: "7", name: "Instagram", value: "", icon: PreviewIcons.globe },
+  { id: "8", name: "Linkedin", value: "", icon: PreviewIcons.globe },
+  { id: "9", name: "Telegram", value: "", icon: PreviewIcons.globe },
+  { id: "10", name: "Website", value: "", icon: PreviewIcons.globe },
+]
+
+const defaultFields = [
+  ...mandatoryFields,
+  ...optionalFields
+]
+
+const mandatorySections = [
+  { id: "2", title: "Experience", content: "", icon: PreviewIcons.file },
+  { id: "3", title: "Education", content: "", icon: PreviewIcons.file },
+]
+
+const optionalSections = [
+  { id: "1", title: "Summary", content: "", icon: PreviewIcons.file },
+  { id: "4", title: "Certifications", content: "", icon: PreviewIcons.file },
+]
+
+const defaultSections = [
+  ...mandatorySections,
+  ...optionalSections,
+]
 
 export function CvMaker() {
-  const [fields, setFields] = useState<Field[]>([
-    { id: "1", name: "Full Name", value: "" },
-    { id: "2", name: "Email", value: "" },
-    { id: "3", name: "Phone", value: "" },
-  ])
-  const [sections, setSections] = useState<Section[]>([
-    { id: "1", title: "Summary", content: "" },
-    { id: "2", title: "Experience", content: "" },
-    { id: "3", title: "Education", content: "" },
-  ])
+  const [fields, setFields] = useState<Field[]>(defaultFields)
+  const [sections, setSections] = useState<Section[]>(defaultSections)
   const [template, setTemplate] = useState<Template>("professional")
   const [newFieldName, setNewFieldName] = useState("")
   const [newSectionTitle, setNewSectionTitle] = useState("")
@@ -146,6 +149,7 @@ export function CvMaker() {
         setFields([...fields, {
           id: Date.now().toString(),
           name,
+          icon: fields.filter((field) => field.name === name)?.[0]?.icon ?? PreviewIcons.vercel,
           value: ""
         }])
       }
@@ -168,6 +172,7 @@ export function CvMaker() {
         setSections([...sections, {
           id: Date.now().toString(),
           title,
+          icon: sections.filter((section) => section.title === title)?.[0]?.icon ?? PreviewIcons.file,
           content: ""
         }])
       }
@@ -186,7 +191,14 @@ export function CvMaker() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     console.log("CV Data:", { template, fields, sections })
-    // Send this data to a server or generate a CV
+    const email = fields.find((field) => { if (field.name === 'Email') return field.value })
+    const phone = fields.find((field) => { if (field.name === 'Phone') return field.value })
+    const name = fields.find((field) => { if (field.name === 'Full Name') return field.value })
+
+    if (email || phone) {
+      // Send this data to a server or generate a CV
+      console.log(email, phone, name)
+    }
   }
 
   return (
@@ -222,8 +234,13 @@ export function CvMaker() {
                       value={field.value}
                       onChange={(e) => updateFieldValue(field.id, e.target.value)}
                       placeholder={field.name}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          e.preventDefault()
+                        }
+                      }}
                     />
-                    {field.id !== "1" && field.id !== "2" && field.id !== "3" && (
+                    {!mandatoryFields.map((field) => field.id).includes(field.id) && (
                       <Button
                         type="button"
                         variant="ghost"
@@ -243,6 +260,12 @@ export function CvMaker() {
                     value={newFieldName}
                     onChange={(e) => setNewFieldName(e.target.value)}
                     placeholder="New field name"
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault()
+                        addField()
+                      }
+                    }}
                   />
                   <Button type="button" onClick={addField} size="icon">
                     <PlusCircle className="h-4 w-4" />
@@ -258,7 +281,7 @@ export function CvMaker() {
                     <CardHeader className="py-3">
                       <div className="flex items-center justify-between">
                         <CardTitle className="text-base">{section.title}</CardTitle>
-                        {section.id !== "1" && section.id !== "2" && section.id !== "3" && (
+                        {!mandatorySections.map((section) => section.id).includes(section.id) && (
                           <Button
                             type="button"
                             variant="ghost"
@@ -286,6 +309,12 @@ export function CvMaker() {
                     value={newSectionTitle}
                     onChange={(e) => setNewSectionTitle(e.target.value)}
                     placeholder="New section title"
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault()
+                        addSection()
+                      }
+                    }}
                   />
                   <Button type="button" onClick={addSection} size="icon">
                     <PlusCircle className="h-4 w-4" />
