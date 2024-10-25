@@ -1,0 +1,22 @@
+{
+  "configurations": [
+    {
+      "name": "DEBUG",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceRoot}",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
+      "autoAttachChildProcesses": true,
+      "preLaunchTask": "${defaultBuildTask}",
+      "skipFiles": [
+        "<node_internals>/**",
+        "node_modules/**"
+      ],
+      "console": "integratedTerminal",
+    }
+  ]
+}
