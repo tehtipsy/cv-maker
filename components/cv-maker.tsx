@@ -86,13 +86,13 @@ enum SectionNames {
 }
 
 const mandatorySections = [
-  { id: "2", title: SectionNames.Experience, content: "", icon: PreviewIcons.file },
-  { id: "3", title: SectionNames.Education, content: "", icon: PreviewIcons.file },
+  { id: "b", title: SectionNames.Experience, content: "", icon: PreviewIcons.file },
+  { id: "c", title: SectionNames.Education, content: "", icon: PreviewIcons.file },
 ]
 
 const optionalSections = [
-  { id: "1", title: SectionNames.Summary, content: "", icon: PreviewIcons.file },
-  { id: "4", title: SectionNames.Certifications, content: "", icon: PreviewIcons.file },
+  { id: "a", title: SectionNames.Summary, content: "", icon: PreviewIcons.file },
+  { id: "d", title: SectionNames.Certifications, content: "", icon: PreviewIcons.file },
 ]
 
 const defaultSections = [
@@ -210,7 +210,10 @@ export function CvMaker() {
                         type="button"
                         variant="ghost"
                         size="icon"
-                        onClick={() => removeField(field.id)}
+                        onClick={() => {
+                          console.log(field)
+                          removeField(field.id)
+                        }}
                       >
                         <Trash2 className="h-4 w-4" />
                         <span className="sr-only">Remove field</span>
