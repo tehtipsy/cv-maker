@@ -1,22 +1,14 @@
 "use client"
 
 import { useState } from "react"
-import {
-  PlusCircle,
-  Trash2,
-  Bold,
-  Italic,
-  // List
-} from "lucide-react"
-import { useEditor, EditorContent } from '@tiptap/react'
-import StarterKit from '@tiptap/starter-kit'
-
+import { PlusCircle, Trash2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import CVPreview from "@/components/ui/cv-preview"
+import RichTextEditor from "@/components/ui/rich-text-editor"
 
 export type Field = {
   id: string
@@ -32,7 +24,13 @@ export type Section = {
   icon: string
 }
 
-export type Template = "professional" | "creative" | "academic"
+enum TemplateTypes {
+  professional = 'professional',
+  creative = 'creative',
+  academic = 'academic',
+}
+
+export type Template = TemplateTypes
 
 enum PreviewIcons {
   file = '/file.svg',
@@ -40,79 +38,39 @@ enum PreviewIcons {
   globe = '/globe.svg',
   next = '/next.svg',
   vercel = '/vercel.svg',
+  email = '/email.svg',
+  location = '/location.svg',
+  phone = '/phone.svg',
+  tealRect = '/teal-rect.svg',
 }
 
-const RichTextEditor = ({ content, onChange }: { content: string, onChange: (content: string) => void }) => {
-  const editor = useEditor({
-    extensions: [StarterKit],
-    content,
-    onUpdate: ({ editor }) => {
-      onChange(editor.getText())
-    },
-    editorProps: {
-      attributes: {
-        class: 'prose prose-sm max-w-none min-h-[150px] focus:outline-none',
-      },
-    },
-  })
-
-  if (!editor) {
-    return null
-  }
-
-  return (
-    <div className="border rounded-md p-2 h-full">
-      <div className="flex items-center space-x-2 mb-2">
-        <Button
-          type="button"
-          variant="ghost"
-          size="icon"
-          onClick={() => editor.chain().focus().toggleBold().run()}
-          className={editor.isActive('bold') ? 'bg-muted' : ''}
-        >
-          <Bold className="h-4 w-4" />
-          <span className="sr-only">Toggle bold</span>
-        </Button>
-        <Button
-          type="button"
-          variant="ghost"
-          size="icon"
-          onClick={() => editor.chain().focus().toggleItalic().run()}
-          className={editor.isActive('italic') ? 'bg-muted' : ''}
-        >
-          <Italic className="h-4 w-4" />
-          <span className="sr-only">Toggle italic</span>
-        </Button>
-        {/* <Button
-          type="button"
-          variant="ghost"
-          size="icon"
-          onClick={() => editor.chain().focus().toggleBulletList().run()}
-          className={editor.isActive('bulletList') ? 'bg-muted' : ''}
-        >
-          <List className="h-4 w-4" />
-          <span className="sr-only">Toggle bullet list</span>
-        </Button> */}
-      </div>
-      <EditorContent editor={editor} />
-    </div>
-  )
+enum FieldNames {
+  Name = 'Full Name',
+  Email = 'Email',
+  Phone = 'Phone',
+  Location = 'Location',
+  Git = 'Git',
+  Meta = 'Meta',
+  Instagram = 'Instagram',
+  Linkedin = 'Linkedin',
+  Telegram = 'Telegram',
+  Website = 'Website',
 }
 
 const mandatoryFields = [
-  { id: "1", name: "Full Name", value: "", icon: PreviewIcons.file },
-  { id: "2", name: "Email", value: "", icon: PreviewIcons.window },
-  { id: "3", name: "Phone", value: "", icon: PreviewIcons.globe },
+  { id: "1", name: FieldNames.Name, value: "", icon: PreviewIcons.file },
+  { id: "2", name: FieldNames.Email, value: "", icon: PreviewIcons.email },
+  { id: "3", name: FieldNames.Phone, value: "", icon: PreviewIcons.phone },
 ]
 
 const optionalFields = [
-  { id: "4", name: "Location", value: "", icon: PreviewIcons.globe },
-  { id: "5", name: "Git", value: "", icon: PreviewIcons.globe },
-  { id: "6", name: "Meta", value: "", icon: PreviewIcons.globe },
-  { id: "7", name: "Instagram", value: "", icon: PreviewIcons.globe },
-  { id: "8", name: "Linkedin", value: "", icon: PreviewIcons.globe },
-  { id: "9", name: "Telegram", value: "", icon: PreviewIcons.globe },
-  { id: "10", name: "Website", value: "", icon: PreviewIcons.globe },
+  { id: "4", name: FieldNames.Location, value: "", icon: PreviewIcons.location },
+  { id: "5", name: FieldNames.Git, value: "", icon: PreviewIcons.globe },
+  { id: "6", name: FieldNames.Meta, value: "", icon: PreviewIcons.globe },
+  { id: "7", name: FieldNames.Instagram, value: "", icon: PreviewIcons.globe },
+  { id: "8", name: FieldNames.Linkedin, value: "", icon: PreviewIcons.globe },
+  { id: "9", name: FieldNames.Telegram, value: "", icon: PreviewIcons.globe },
+  { id: "10", name: FieldNames.Website, value: "", icon: PreviewIcons.globe },
 ]
 
 const defaultFields = [
@@ -120,14 +78,21 @@ const defaultFields = [
   ...optionalFields
 ]
 
+enum SectionNames {
+  Summary = 'Summary',
+  Experience = 'Experience',
+  Education = 'Education',
+  Certifications = 'Certifications',
+}
+
 const mandatorySections = [
-  { id: "2", title: "Experience", content: "", icon: PreviewIcons.file },
-  { id: "3", title: "Education", content: "", icon: PreviewIcons.file },
+  { id: "2", title: SectionNames.Experience, content: "", icon: PreviewIcons.file },
+  { id: "3", title: SectionNames.Education, content: "", icon: PreviewIcons.file },
 ]
 
 const optionalSections = [
-  { id: "1", title: "Summary", content: "", icon: PreviewIcons.file },
-  { id: "4", title: "Certifications", content: "", icon: PreviewIcons.file },
+  { id: "1", title: SectionNames.Summary, content: "", icon: PreviewIcons.file },
+  { id: "4", title: SectionNames.Certifications, content: "", icon: PreviewIcons.file },
 ]
 
 const defaultSections = [
@@ -138,7 +103,7 @@ const defaultSections = [
 export function CvMaker() {
   const [fields, setFields] = useState<Field[]>(defaultFields)
   const [sections, setSections] = useState<Section[]>(defaultSections)
-  const [template, setTemplate] = useState<Template>("professional")
+  const [template, setTemplate] = useState<Template>(TemplateTypes.professional)
   const [newFieldName, setNewFieldName] = useState("")
   const [newSectionTitle, setNewSectionTitle] = useState("")
 
@@ -191,9 +156,9 @@ export function CvMaker() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     console.log("CV Data:", { template, fields, sections })
-    const email = fields.find((field) => { if (field.name === 'Email') return field.value })
-    const phone = fields.find((field) => { if (field.name === 'Phone') return field.value })
-    const name = fields.find((field) => { if (field.name === 'Full Name') return field.value })
+    const email = fields.find((field) => { if (field.name === FieldNames.Email) return field.value })
+    const phone = fields.find((field) => { if (field.name === FieldNames.Phone) return field.value })
+    const name = fields.find((field) => { if (field.name === FieldNames.Name) return field.value })
 
     if (email || phone) {
       // Send this data to a server or generate a CV
