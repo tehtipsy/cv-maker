@@ -7,8 +7,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import CVPreview from "@/components/ui/cv-preview"
-import RichTextEditor from "@/components/ui/rich-text-editor"
+import CVPreview from "@/components/ui/cv/cv-preview"
+import RichTextEditor from "@/components/ui/cv/rich-text-editor"
 
 export type Field = {
   id: string
