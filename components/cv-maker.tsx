@@ -52,6 +52,7 @@ enum PreviewIcons {
   cert = '/cert.svg',
   locked = '/locked.svg',
   unlocked = '/unlocked.svg',
+  user = '/user.svg',
 }
 
 enum FieldNames {
@@ -68,7 +69,7 @@ enum FieldNames {
 }
 
 const mandatoryFields = [
-  { id: "1", name: FieldNames.Name, value: "", icon: PreviewIcons.file },
+  { id: "1", name: FieldNames.Name, value: "", icon: PreviewIcons.user },
   { id: "2", name: FieldNames.Email, value: "", icon: PreviewIcons.email },
   { id: "3", name: FieldNames.Phone, value: "", icon: PreviewIcons.phone },
 ]
