@@ -43,6 +43,15 @@ enum PreviewIcons {
   location = '/location.svg',
   phone = '/phone.svg',
   tealRect = '/teal-rect.svg',
+  hat = '/hat.svg',
+  github = '/github.svg',
+  facebook = '/facebook.svg',
+  insta = '/insta.svg',
+  linked = '/linkedin.svg',
+  telegram = '/telegram.svg',
+  cert = '/cert.svg',
+  locked = '/locked.svg',
+  unlocked = '/unlocked.svg',
 }
 
 enum FieldNames {
@@ -51,9 +60,9 @@ enum FieldNames {
   Phone = 'Phone',
   Location = 'Location',
   Git = 'Git',
-  Meta = 'Meta',
+  Meta = 'Facebook',
   Instagram = 'Instagram',
-  Linkedin = 'Linkedin',
+  Linkedin = 'LinkedIn',
   Telegram = 'Telegram',
   Website = 'Website',
 }
@@ -66,11 +75,11 @@ const mandatoryFields = [
 
 const optionalFields = [
   { id: "4", name: FieldNames.Location, value: "", icon: PreviewIcons.location },
-  { id: "5", name: FieldNames.Git, value: "", icon: PreviewIcons.globe },
-  { id: "6", name: FieldNames.Meta, value: "", icon: PreviewIcons.globe },
-  { id: "7", name: FieldNames.Instagram, value: "", icon: PreviewIcons.globe },
-  { id: "8", name: FieldNames.Linkedin, value: "", icon: PreviewIcons.globe },
-  { id: "9", name: FieldNames.Telegram, value: "", icon: PreviewIcons.globe },
+  { id: "5", name: FieldNames.Git, value: "", icon: PreviewIcons.github },
+  { id: "6", name: FieldNames.Meta, value: "", icon: PreviewIcons.facebook },
+  { id: "7", name: FieldNames.Instagram, value: "", icon: PreviewIcons.insta },
+  { id: "8", name: FieldNames.Linkedin, value: "", icon: PreviewIcons.linked },
+  { id: "9", name: FieldNames.Telegram, value: "", icon: PreviewIcons.telegram },
   { id: "10", name: FieldNames.Website, value: "", icon: PreviewIcons.globe },
 ]
 
@@ -88,12 +97,12 @@ enum SectionNames {
 
 const mandatorySections = [
   { id: "b", title: SectionNames.Experience, content: "", icon: PreviewIcons.file },
-  { id: "c", title: SectionNames.Education, content: "", icon: PreviewIcons.file },
+  { id: "c", title: SectionNames.Education, content: "", icon: PreviewIcons.hat },
 ]
 
 const optionalSections = [
   { id: "a", title: SectionNames.Summary, content: "", icon: PreviewIcons.file },
-  { id: "d", title: SectionNames.Certifications, content: "", icon: PreviewIcons.file },
+  { id: "d", title: SectionNames.Certifications, content: "", icon: PreviewIcons.cert },
 ]
 
 const defaultSections = [
@@ -116,7 +125,7 @@ export function CvMaker() {
         setFields([...fields, {
           id: Date.now().toString(),
           name,
-          icon: fields.filter((field) => field.name === name)?.[0]?.icon ?? PreviewIcons.vercel,
+          icon: fields.filter((field) => field.name === name)?.[0]?.icon ?? PreviewIcons.globe,
           value: ""
         }])
       }

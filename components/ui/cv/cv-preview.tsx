@@ -6,6 +6,7 @@ import { createSwapy, type Swapy } from 'swapy'
 import { Button } from '@/components/ui/button'
 import { RenderPreviewItem } from '@/components/ui/cv/cv-preview-items'
 import { OrderingContext } from '@/contexts/cvPreviewOrdering'
+import Image from 'next/image'
 
 type CVPreviewProps = {
   fields: Field[]
@@ -120,7 +121,14 @@ const CVPreview: React.FC<CVPreviewProps> = ({ fields, sections, template }) => 
         onClick={() => setIsUnlocked(!isUnlocked)}
         className="mt-4 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
       >
-        {isUnlocked ? 'Lock' : 'Unlock'} Arrangement
+        <Image
+          className="dark:invert"
+          src={isUnlocked ? '/unlocked.svg' : '/locked.svg'}
+          alt={isUnlocked ? 'Lock' : 'Unlock'}
+          width={16}
+          height={16}
+        />
+          {isUnlocked ? 'Lock' : 'Unlock'} Arrangement
       </Button>
     </div>
   )

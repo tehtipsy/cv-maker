@@ -39,7 +39,7 @@ export const CvSectionPreview: React.FC<CvSectionPreviewProps> = ({ item }) => {
     <div className="p-2 rounded-lg bg-white shadow-sm">
       <div className="flex flex-row items-center space-x-2 mb-2">
         <Image
-          className="dark:invert"
+          // className="dark:invert"
           src={item.icon}
           alt={item.id}
           width={16}
