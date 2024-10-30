@@ -20,6 +20,7 @@ const CVPreview: React.FC<CVPreviewProps> = ({ fields, sections, template }) => 
   const { map, setMap } = useContext(OrderingContext)
   const containerRef = useRef<HTMLDivElement | null>(null)
   const swapyRef = useRef<Swapy | null>(null)
+  const mapRef = useRef(map)
 
   useEffect(() => {
     setIsMounted(true)
@@ -30,7 +31,14 @@ const CVPreview: React.FC<CVPreviewProps> = ({ fields, sections, template }) => 
   })
 
   useEffect(() => {
-    setItems([...fields, ...sections])
+    if (mapRef.current) {
+      const ordering = Object.fromEntries(
+        Object.entries(mapRef.current).map(([key, value]) => [value, key])
+      )
+      setItems([...fields, ...sections].sort((a, b) => ordering[a.id] - ordering[b.id]))
+    } else {
+      setItems([...fields, ...sections])
+    }
   }, [fields, sections])
 
   // Initialize Swapy AFTER component is mounted
