@@ -9,6 +9,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import CVPreview from "@/components/ui/cv/cv-preview"
 import RichTextEditor from "@/components/ui/cv/rich-text-editor"
+import { OrderingContextProvider } from "@/contexts/cvPreviewOrdering"
 
 export type Field = {
   id: string
@@ -106,6 +107,7 @@ export function CvMaker() {
   const [template, setTemplate] = useState<Template>(TemplateTypes.professional)
   const [newFieldName, setNewFieldName] = useState("")
   const [newSectionTitle, setNewSectionTitle] = useState("")
+  const [refreshKey, setRefreshKey] = useState(0);
 
   const addField = () => {
     if (newFieldName.trim() !== "") {
@@ -124,6 +126,7 @@ export function CvMaker() {
 
   const removeField = (id: string) => {
     setFields(fields.filter((field) => field.id !== id))
+    setRefreshKey(prevKey => prevKey + 1)
   }
 
   const updateFieldValue = (id: string, value: string) => {
@@ -147,6 +150,7 @@ export function CvMaker() {
 
   const removeSection = (id: string) => {
     setSections(sections.filter((section) => section.id !== id))
+    setRefreshKey(prevKey => prevKey + 1)
   }
 
   const updateSectionContent = (id: string, content: string) => {
@@ -297,7 +301,14 @@ export function CvMaker() {
           </Card>
         </form>
         <div className="lg:w-1/2 mt-6 lg:mt-0">
-          <CVPreview fields={fields} sections={sections} template={template} />
+          <OrderingContextProvider>
+            <CVPreview
+              key={refreshKey}
+              fields={fields}
+              sections={sections}
+              template={template}
+            />
+          </OrderingContextProvider>
         </div>
       </div>
     </div>

@@ -1,3 +1,5 @@
+'use client'
+
 import StarterKit from '@tiptap/starter-kit'
 import { EditorContent, useEditor } from "@tiptap/react"
 import { Bold, Italic } from "lucide-react"
