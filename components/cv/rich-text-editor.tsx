@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import StarterKit from '@tiptap/starter-kit'
 import { EditorContent, useEditor } from "@tiptap/react"
@@ -17,6 +17,7 @@ const RichTextEditor = ({ content, onChange }: { content: string, onChange: (con
         class: 'prose prose-sm max-w-none min-h-[150px] focus:outline-none',
       },
     },
+    immediatelyRender: false, // Explicitly set to false when using SSR
   })
 
   if (!editor) {

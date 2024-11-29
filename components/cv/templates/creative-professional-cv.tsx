@@ -5,7 +5,9 @@ import { motion } from 'framer-motion'
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
-import { Mail, Phone, MapPin, Linkedin, Github, ChevronDown } from 'lucide-react'
+import { Mail, Phone, MapPin, ChevronDown } from 'lucide-react'
+import { LinkedInLogoIcon, GitHubLogoIcon } from "@radix-ui/react-icons"
+
 import Image from 'next/image'
 
 export function CreativeProfessionalCv() {
@@ -44,8 +46,8 @@ export function CreativeProfessionalCv() {
                     { icon: Mail, text: 'jane@professional.com' },
                     { icon: Phone, text: '+1 (555) 123-4567' },
                     { icon: MapPin, text: 'New York City, NY' },
-                    { icon: Linkedin, text: 'linkedin.com/in/janepro' },
-                    { icon: Github, text: 'github.com/janepro' },
+                    { icon: LinkedInLogoIcon, text: 'linkedin.com/in/janepro' },
+                    { icon: GitHubLogoIcon, text: 'github.com/janepro' },
                   ].map((item, index) => (
                     <div key={index} className="flex items-center space-x-2 text-teal-100">
                       <item.icon className="w-4 h-4" />

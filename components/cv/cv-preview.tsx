@@ -1,20 +1,16 @@
 'use client'
 
-import type { Field, Section, Template } from '../../cv-maker'
+import type { Field, Section } from '@/contexts/cvForm'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { createSwapy, type Swapy } from 'swapy'
 import { Button } from '@/components/ui/button'
-import { RenderPreviewItem } from '@/components/ui/cv/cv-preview-items'
+import { RenderPreviewItem } from '@/components/cv/cv-preview-items'
 import { OrderingContext } from '@/contexts/cvPreviewOrdering'
 import Image from 'next/image'
+import { FormContext } from '@/contexts/cvForm'
 
-type CVPreviewProps = {
-  fields: Field[]
-  sections: Section[]
-  template: Template
-}
-
-const CVPreview: React.FC<CVPreviewProps> = ({ fields, sections, template }) => {
+const CvPreview: React.FC = () => {
+  const { fields, sections, template } = useContext(FormContext);
   const [items, setItems] = useState<(Field | Section)[]>([...fields, ...sections])
   const [isUnlocked, setIsUnlocked] = useState(true)
   const [isMounted, setIsMounted] = useState(false)
@@ -101,19 +97,20 @@ const CVPreview: React.FC<CVPreviewProps> = ({ fields, sections, template }) => 
         {items && [...items]
           .map((item, index) => {
             return (
-            <div
-              key={`${index}-slot-key`}
-              data-swapy-slot={index}
-              className="p-2 border border-transparent hover:border-gray-200 rounded-lg transition-colors duration-200"
-            >
               <div
-                key={`${item.id}-${'title' in item ? item.title : item.name}-item-key`}
-                data-swapy-item={item.id}
+                key={`${index}-slot-key`}
+                data-swapy-slot={index}
+                className="p-2 border border-transparent hover:border-gray-200 rounded-lg transition-colors duration-200"
               >
-                <RenderPreviewItem item={item} />
+                <div
+                  key={`${item.id}-${'title' in item ? item.title : item.name}-item-key`}
+                  data-swapy-item={item.id}
+                >
+                  <RenderPreviewItem item={item} />
+                </div>
               </div>
-            </div>
-          )})
+            )
+          })
         }
       </div>
 
@@ -128,10 +125,10 @@ const CVPreview: React.FC<CVPreviewProps> = ({ fields, sections, template }) => 
           width={16}
           height={16}
         />
-          {isUnlocked ? 'Lock' : 'Unlock'} Arrangement
+        {isUnlocked ? 'Lock' : 'Unlock'} Arrangement
       </Button>
     </div>
   )
 }
 
-export default CVPreview
+export default CvPreview

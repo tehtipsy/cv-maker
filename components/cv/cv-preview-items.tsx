@@ -1,6 +1,6 @@
 'use client'
 
-import type { Field, Section } from "@/components/cv-maker"
+import type { Field, Section } from "@/contexts/cvForm"
 import Image from 'next/image'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
