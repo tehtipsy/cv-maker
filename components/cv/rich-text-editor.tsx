@@ -7,10 +7,19 @@ import { Button } from "@/components/ui/button"
 
 const RichTextEditor = ({ content, onChange }: { content: string, onChange: (content: string) => void }) => {
   const editor = useEditor({
-    extensions: [StarterKit],
+    extensions: [StarterKit.configure({
+      heading: {
+        levels: [1, 2, 3], // Limit to H1-H3
+      },
+      bulletList: {
+        keepMarks: true, // Preserve text formatting in lists
+        keepAttributes: true // Preserve other attributes
+      }
+    })],
     content,
     onUpdate: ({ editor }) => {
       onChange(editor.getText())
+      // onChange(JSON.stringify(editor.getJSON()))
     },
     editorProps: {
       attributes: {

@@ -3,30 +3,38 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-// import { Separator } from "@/components/ui/separator"
+import { Separator } from "@/components/ui/separator"
 
 import { Field, FieldNames, PreviewIcons, Section } from "@/lib/cvFields"
 
 import { MapPin } from "lucide-react"
-import { LinkedInLogoIcon, MobileIcon, EnvelopeClosedIcon, InstagramLogoIcon, GitHubLogoIcon } from "@radix-ui/react-icons"
+import {
+  LinkedInLogoIcon,
+  MobileIcon,
+  EnvelopeClosedIcon,
+  InstagramLogoIcon,
+  GitHubLogoIcon,
+  GlobeIcon,
+  VercelLogoIcon,
+  FileIcon
+} from "@radix-ui/react-icons"
 
 import ReactMarkdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
+// import remarkGfm from 'remark-gfm' // remove from dependencies
 
 import { getValuesFromFields } from "@/lib/cvFields"
-
 const ModernIcons: Record<string, React.ReactNode> = {
-  // [PreviewIcons.file]: 'file',
+  [PreviewIcons.file]: <FileIcon className="h-3 w-3" />,
   // [PreviewIcons.window]: 'window',
-  // [PreviewIcons.globe]: 'globe',
+  [PreviewIcons.globe]: <GlobeIcon className="h-3 w-3" />,
   // [PreviewIcons.next]: 'next',
-  // [PreviewIcons.vercel]: 'vercel',
+  [PreviewIcons.vercel]: <VercelLogoIcon className="h-3 w-3" />,
   [PreviewIcons.email]: <EnvelopeClosedIcon className="h-3 w-3" />,
   [PreviewIcons.location]: <MapPin className="h-3 w-3" />,
   [PreviewIcons.phone]: <MobileIcon className="h-3 w-3" />,
   // [PreviewIcons.hat]: 'hat',
   [PreviewIcons.github]: <GitHubLogoIcon className="h-3 w-3" />,
-  // [PreviewIcons.facebook]: 'facebook',
+  // [PreviewIcons.facebook]: <svg xmlns="http://www.w3.org/2000/svg" height="10" width="10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-facebook"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>,
   [PreviewIcons.insta]: <InstagramLogoIcon className="h-3 w-3" />,
   [PreviewIcons.linked]: <LinkedInLogoIcon className="h-3 w-3" />,
   // [PreviewIcons.telegram]: 'telegram',
@@ -37,7 +45,6 @@ const ModernIcons: Record<string, React.ReactNode> = {
 }
 
 const nonSwapyFieldNames = [FieldNames.Name, FieldNames.Title]
-
 
 export default function ModernCvTemplate ({ items }: { items: (Field | Section)[] }) {
   const fields = items.filter((item): item is Field => item.type === 'field');
@@ -104,8 +111,9 @@ export default function ModernCvTemplate ({ items }: { items: (Field | Section)[
                   </CardHeader>
                   <CardContent>
                     <ReactMarkdown
-                      remarkPlugins={[remarkGfm]}
+                      // remarkPlugins={[remarkGfm]}
                       components={{
+                        hr: ({ ...props }) => <Separator {...props} />,
                         h1: ({ ...props }) => <h1 className="text-2xl font-bold mt-4 mb-2" {...props} />,
                         h2: ({ ...props }) => <h2 className="text-xl font-semibold mt-3 mb-2" {...props} />,
                         h3: ({ ...props }) => <h3 className="text-lg font-medium mt-2 mb-1" {...props} />,
