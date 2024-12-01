@@ -1,6 +1,6 @@
 'use client';
 
-import { FieldNames } from "@/contexts/cvForm"
+import { FieldNames } from "@/lib/cvFields"
 import { useContext } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"

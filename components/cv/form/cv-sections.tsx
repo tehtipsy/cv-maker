@@ -1,7 +1,8 @@
 'use client';
 
 import { useContext, useState } from "react";
-import { FormContext, mandatorySections, PreviewIcons } from "@/contexts/cvForm";
+import { mandatorySections, PreviewIcons } from "@/lib/cvFields";
+import { FormContext } from "@/contexts/cvForm";
 import { FormRefreshContext } from "@/contexts/cvFormRefresh";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -19,6 +20,7 @@ export default function CvSections () {
       const title = newSectionTitle.charAt(0).toUpperCase() + newSectionTitle.slice(1)
       if (!sections.map((obj) => obj.title).includes(title)) {
         setSections([...sections, {
+          type: 'section',
           id: Date.now().toString(),
           title,
           icon: sections.filter((section) => section.title === title)?.[0]?.icon ?? PreviewIcons.file,

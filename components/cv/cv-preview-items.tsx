@@ -1,6 +1,6 @@
-'use client'
+'use client';
 
-import type { Field, Section } from "@/contexts/cvForm"
+import type { Field, Section } from "@/lib/cvFields"
 import Image from 'next/image'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
@@ -17,7 +17,7 @@ type CvRenderItemProps = {
   item: Field | Section
 }
 
-export const CvFieldPreview: React.FC<CvFieldPreviewProps> = ({ item }) => { 
+const CvFieldPreview: React.FC<CvFieldPreviewProps> = ({ item }) => { 
   return (
     <div className="flex flex-row items-center space-x-2 p-2 rounded-lg bg-white shadow-sm">
       <Image
@@ -34,7 +34,7 @@ export const CvFieldPreview: React.FC<CvFieldPreviewProps> = ({ item }) => {
 }
 
 
-export const CvSectionPreview: React.FC<CvSectionPreviewProps> = ({ item }) => {
+const CvSectionPreview: React.FC<CvSectionPreviewProps> = ({ item }) => {
   return (
     <div className="p-2 rounded-lg bg-white shadow-sm">
       <div className="flex flex-row items-center space-x-2 mb-2">
@@ -66,7 +66,7 @@ export const CvSectionPreview: React.FC<CvSectionPreviewProps> = ({ item }) => {
   )
 }
 
-export const RenderPreviewItem: React.FC<CvRenderItemProps> = ({ item }) => {
+export default function RenderPreviewItem ({ item }: CvRenderItemProps) {
   if ('value' in item) {
     // It's a Field
     return (

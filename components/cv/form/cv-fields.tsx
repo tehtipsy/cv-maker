@@ -1,7 +1,8 @@
 'use client';
 
 import { useContext, useState } from "react";
-import { FormContext, mandatoryFields, PreviewIcons } from "@/contexts/cvForm";
+import { mandatoryFields, PreviewIcons } from "@/lib/cvFields";
+import { FormContext } from "@/contexts/cvForm";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { PlusCircle, Trash2 } from "lucide-react";
@@ -17,6 +18,7 @@ export default function CvFields () {
       const name = newFieldName.charAt(0).toUpperCase() + newFieldName.slice(1)
       if (!fields.map((obj) => obj.name).includes(name)) {
         setFields([...fields, {
+          type: 'field',
           id: Date.now().toString(),
           name,
           icon: fields.filter((field) => field.name === name)?.[0]?.icon ?? PreviewIcons.globe,

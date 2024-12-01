@@ -1,15 +1,21 @@
-'use client'
+'use client';
 
-import type { Field, Section } from '@/contexts/cvForm'
+import type { Field, Section } from '@/lib/cvFields'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { createSwapy, type Swapy } from 'swapy'
 import { Button } from '@/components/ui/button'
-import { RenderPreviewItem } from '@/components/cv/cv-preview-items'
+// import RenderPreviewItem from '@/components/cv/cv-preview-items'
 import { OrderingContext } from '@/contexts/cvPreviewOrdering'
 import Image from 'next/image'
 import { FormContext } from '@/contexts/cvForm'
+import ModernCvTemplate from './templates/modern-cv';
 
-const CvPreview: React.FC = () => {
+export type PreviewTemplateProps = {
+  fields: Field[]
+  sections: Section[]
+}
+
+export default function CvPreview () {
   const { fields, sections, template } = useContext(FormContext);
   const [items, setItems] = useState<(Field | Section)[]>([...fields, ...sections])
   const [isUnlocked, setIsUnlocked] = useState(true)
@@ -94,7 +100,7 @@ const CvPreview: React.FC = () => {
         ref={containerRef}
         className="relative space-y-4"
       >
-        {items && [...items]
+        {/* {items && [...items]
           .map((item, index) => {
             return (
               <div
@@ -111,7 +117,12 @@ const CvPreview: React.FC = () => {
               </div>
             )
           })
-        }
+        } */}
+        <ModernCvTemplate
+          // fields={fields}
+          // sections={sections}
+          items={items}
+        />
       </div>
 
       <Button
@@ -130,5 +141,3 @@ const CvPreview: React.FC = () => {
     </div>
   )
 }
-
-export default CvPreview

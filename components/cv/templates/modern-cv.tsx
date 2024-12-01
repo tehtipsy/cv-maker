@@ -3,51 +3,128 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Separator } from "@/components/ui/separator"
-import { Phone, MapPin } from "lucide-react"
-import { EnvelopeClosedIcon } from "@radix-ui/react-icons"
+// import { Separator } from "@/components/ui/separator"
 
-export function ModernCv() {
+import { Field, FieldNames, PreviewIcons, Section } from "@/lib/cvFields"
+
+import { MapPin } from "lucide-react"
+import { LinkedInLogoIcon, MobileIcon, EnvelopeClosedIcon, InstagramLogoIcon, GitHubLogoIcon } from "@radix-ui/react-icons"
+
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
+
+import { getValuesFromFields } from "@/lib/cvFields"
+
+const ModernIcons: Record<string, React.ReactNode> = {
+  // [PreviewIcons.file]: 'file',
+  // [PreviewIcons.window]: 'window',
+  // [PreviewIcons.globe]: 'globe',
+  // [PreviewIcons.next]: 'next',
+  // [PreviewIcons.vercel]: 'vercel',
+  [PreviewIcons.email]: <EnvelopeClosedIcon className="h-3 w-3" />,
+  [PreviewIcons.location]: <MapPin className="h-3 w-3" />,
+  [PreviewIcons.phone]: <MobileIcon className="h-3 w-3" />,
+  // [PreviewIcons.hat]: 'hat',
+  [PreviewIcons.github]: <GitHubLogoIcon className="h-3 w-3" />,
+  // [PreviewIcons.facebook]: 'facebook',
+  [PreviewIcons.insta]: <InstagramLogoIcon className="h-3 w-3" />,
+  [PreviewIcons.linked]: <LinkedInLogoIcon className="h-3 w-3" />,
+  // [PreviewIcons.telegram]: 'telegram',
+  // [PreviewIcons.cert]: 'cert',
+  // [PreviewIcons.locked]: 'locked',
+  // [PreviewIcons.unlocked]: 'unlocked',
+  // [PreviewIcons.user]: 'user',
+}
+
+const nonSwapyFieldNames = [FieldNames.Name, FieldNames.Title]
+
+
+export default function ModernCvTemplate ({ items }: { items: (Field | Section)[] }) {
+  const fields = items.filter((item): item is Field => item.type === 'field');
+  const sections = items.filter((item): item is Section => item.type === 'section');
+  const { fullName, initials, jobTitle } = getValuesFromFields(fields)
+
   return (
     <div className="min-h-screen bg-gray-100 p-4 dark:bg-gray-900">
       <main className="container mx-auto space-y-6">
         <Card className="overflow-hidden">
           <CardContent className="p-6 sm:p-8">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-8">
-              <Avatar className="h-24 w-24">
-                <AvatarImage alt="John Doe" src="/placeholder.svg?height=96&width=96" />
-                <AvatarFallback>JD</AvatarFallback>
-              </Avatar>
+              {initials &&
+                <Avatar key={initials} className="h-24 w-24">
+                  <AvatarImage
+                    alt={initials}
+                    src="/placeholder.svg?height=96&width=96"
+                  />
+                  <AvatarFallback>{initials}</AvatarFallback>
+                </Avatar>
+              }
               <div className="space-y-2">
-                <h1 className="text-3xl font-bold">John Doe</h1>
-                <p className="text-xl text-muted-foreground">Senior Software Engineer</p>
+                {fullName && <h1 className="text-3xl font-bold">{fullName}</h1>}
+                {jobTitle && <p className="text-xl text-muted-foreground">{jobTitle}</p>}
                 <div className="flex flex-wrap gap-2">
-                  <Badge variant="secondary" className="flex items-center gap-1">
-                    <EnvelopeClosedIcon className="h-3 w-3" />
-                    john.doe@example.com
-                  </Badge>
-                  <Badge variant="secondary" className="flex items-center gap-1">
-                    <Phone className="h-3 w-3" />
-                    (123) 456-7890
-                  </Badge>
-                  <Badge variant="secondary" className="flex items-center gap-1">
-                    <MapPin className="h-3 w-3" />
-                    San Francisco, CA
-                  </Badge>
-                  <Badge variant="secondary" className="flex items-center gap-1">
-                    linkedin.com/in/johndoe
-                  </Badge>
-                  <Badge variant="secondary" className="flex items-center gap-1">
-                    github.com/johndoe
-                  </Badge>
+                  {fields && fields.map((field, index) => {
+                    if (!nonSwapyFieldNames.includes(field.name as FieldNames) && field.value) 
+                      return (
+                        <div
+                          key={`${index}-slot-key`}
+                          data-swapy-slot={index}
+                        >
+                          <Badge
+                            key={index}
+                            data-swapy-item={field.id}
+                            variant="secondary"
+                            className="flex items-center gap-1"
+                          >
+                            {field.icon && ModernIcons[field.icon]}
+                            {field.value}
+                          </Badge>
+                        </div>
+                      )
+                  })}
                 </div>
               </div>
             </div>
           </CardContent>
         </Card>
-
         <div className="grid gap-6 md:grid-cols-2">
-          <Card className="col-span-2">
+          {sections && sections.map((section, index) => {
+            return (
+              <div
+                key={`${index}-section-slot-key`}
+                data-swapy-slot={`${index}-section-slot`}
+              >
+                <Card
+                  key={section.id}
+                  data-swapy-item={section.id}
+                  className="col-span-2"
+                >
+                  <CardHeader>
+                    <CardTitle>{section.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ReactMarkdown
+                      remarkPlugins={[remarkGfm]}
+                      components={{
+                        h1: ({ ...props }) => <h1 className="text-2xl font-bold mt-4 mb-2" {...props} />,
+                        h2: ({ ...props }) => <h2 className="text-xl font-semibold mt-3 mb-2" {...props} />,
+                        h3: ({ ...props }) => <h3 className="text-lg font-medium mt-2 mb-1" {...props} />,
+                        ul: ({ ...props }) => <ul className="list-disc list-outside pl-5 mb-2" {...props} />,
+                        ol: ({ ...props }) => <ol className="list-decimal list-outside pl-5 mb-2" {...props} />,
+                        li: ({ ...props }) => <li className="mb-1" {...props} />,
+                        p: ({ ...props }) => <p className="mb-2" {...props} />,
+                        a: ({ ...props }) => <a className="text-blue-600 hover:underline" {...props} />,
+                      }}
+                    >
+                      {section.content}
+                    </ReactMarkdown>
+                  </CardContent>
+                </Card>
+              </div>
+            )
+          })}
+
+          {/* <Card className="col-span-2">
             <CardHeader>
               <CardTitle>Professional Summary</CardTitle>
             </CardHeader>
@@ -169,7 +246,8 @@ export function ModernCv() {
                 <p className="text-sm text-muted-foreground">TechCorp Inc. | 2019</p>
               </div>
             </CardContent>
-          </Card>
+          </Card> */}
+
         </div>
       </main>
     </div>
