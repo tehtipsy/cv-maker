@@ -1,7 +1,7 @@
 'use client'
 
 import { defaultFields, defaultSections, Field, Section, Template, TemplateTypes } from "@/lib/cvFields";
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useContext, useState } from "react";
 
 type FormContextProps = {
   fields: Field[]
@@ -14,7 +14,7 @@ type FormContextProps = {
   setRefreshKey: (refreshKey: number) => void
 }
 
-export const FormContext = createContext<FormContextProps>({
+const FormContext = createContext<FormContextProps>({
   fields: defaultFields,
   setFields: () => { },
   sections: defaultSections,
@@ -51,4 +51,8 @@ export const FormContextProvider = (props: FormContextProviderProps) => {
       {props.children}
     </FormContext.Provider>
   );
+};
+
+export const useFormContext = () => {
+  return useContext(FormContext);
 };

@@ -1,13 +1,13 @@
 'use client';
 
 import type { Field, Section } from '@/lib/cvFields'
-import { useContext, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { createSwapy, type Swapy } from 'swapy'
 import { Button } from '@/components/ui/button'
 // import RenderPreviewItem from '@/components/cv/cv-preview-items'
-import { OrderingContext } from '@/contexts/cvPreviewOrdering'
+import { useSwapyMapContext } from '@/contexts/cvPreviewOrdering'
 import Image from 'next/image'
-import { FormContext } from '@/contexts/cvForm'
+import { useFormContext } from '@/contexts/cvForm'
 import ModernCvTemplate from './templates/modern-cv';
 
 export type PreviewTemplateProps = {
@@ -16,11 +16,11 @@ export type PreviewTemplateProps = {
 }
 
 export default function CvPreview () {
-  const { fields, sections, template } = useContext(FormContext);
+  const { fields, sections, template } = useFormContext();
   const [items, setItems] = useState<(Field | Section)[]>([...fields, ...sections])
   const [isUnlocked, setIsUnlocked] = useState(true)
   const [isMounted, setIsMounted] = useState(false)
-  const { map, setMap } = useContext(OrderingContext)
+  const { map, setMap } = useSwapyMapContext()
   const containerRef = useRef<HTMLDivElement | null>(null)
   const swapyRef = useRef<Swapy | null>(null)
   const mapRef = useRef(map)

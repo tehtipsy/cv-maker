@@ -1,14 +1,14 @@
-'use client'
+'use client';
 
 import type { SwapEventObject } from "swapy";
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useContext, useState } from "react";
 
 type OrderingContextProps = {
   map: SwapEventObject | null
   setMap: (map: SwapEventObject) => void
 }
 
-export const OrderingContext = createContext<OrderingContextProps>({
+const OrderingContext = createContext<OrderingContextProps>({
   map: null,
   setMap: () => {}
 });
@@ -31,4 +31,8 @@ export const OrderingContextProvider = (props: OrderingContextProviderProps) => 
       {props.children}
     </OrderingContext.Provider>
   );
+};
+
+export const useSwapyMapContext = () => {
+  return useContext(OrderingContext);
 };

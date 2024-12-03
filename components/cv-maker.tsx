@@ -1,14 +1,13 @@
-"use client"
+"use client";
 
-import { useContext } from "react"
 import { OrderingContextProvider } from "@/contexts/cvPreviewOrdering"
 import { FormContextProvider } from "@/contexts/cvForm"
-import { FormRefreshContext } from "@/contexts/cvFormRefresh"
+import {  useRefreshKeyContext } from "@/contexts/cvFormRefresh"
 import CvPreview from "@/components/cv/cv-preview"
 import CvForm from "@/components/cv/cv-form"
 
 export function CvMaker() {
-  const { refreshKey } = useContext(FormRefreshContext);
+  const { refreshKey } = useRefreshKeyContext();
 
   return (
     <div className="container mx-auto p-4">

@@ -1,13 +1,13 @@
-'use client'
+'use client';
 
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useContext, useState } from "react";
 
 type FormContextProps = {
   refreshKey: number,
   setRefreshKey: (value: number | ((prevKey: number) => number)) => void
 }
 
-export const FormRefreshContext = createContext<FormContextProps>({
+const FormRefreshContext = createContext<FormContextProps>({
   refreshKey: 0,
   setRefreshKey: () => {}
 });
@@ -30,3 +30,7 @@ export const FormRefreshContextProvider = (props: FormRefreshContextProviderProp
     </FormRefreshContext.Provider>
   );
 };
+
+export const useRefreshKeyContext = () => {
+  return useContext(FormRefreshContext)
+}

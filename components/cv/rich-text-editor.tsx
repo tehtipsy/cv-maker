@@ -17,8 +17,8 @@ const RichTextEditor = ({ content, onChange }: { content: string, onChange: (con
       }
     })],
     content,
-    onUpdate: ({ editor }) => {
-      onChange(editor.getText())
+    onUpdate: ({ editor: _editor }) => {
+      onChange(_editor.getText())
       // onChange(JSON.stringify(editor.getJSON()))
     },
     editorProps: {

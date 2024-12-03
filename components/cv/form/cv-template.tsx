@@ -1,13 +1,12 @@
 'use client';
 
-import { useContext } from "react"
 import { Template, TemplateTypes } from "@/lib/cvFields"
-import { FormContext } from "@/contexts/cvForm"
+import { useFormContext } from "@/contexts/cvForm"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 export default function CvTemplate () {
-  const { template, setTemplate } = useContext(FormContext)
+  const { template, setTemplate } = useFormContext()
 
   return (
     <div>

@@ -1,16 +1,16 @@
 'use client';
 
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { mandatoryFields, PreviewIcons } from "@/lib/cvFields";
-import { FormContext } from "@/contexts/cvForm";
+import { useFormContext } from "@/contexts/cvForm";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { PlusCircle, Trash2 } from "lucide-react";
-import { FormRefreshContext } from "@/contexts/cvFormRefresh";
+import { useRefreshKeyContext } from "@/contexts/cvFormRefresh";
 
 export default function CvFields () {
-  const { fields, setFields } = useContext(FormContext)
-  const { setRefreshKey } = useContext(FormRefreshContext);
+  const { fields, setFields } = useFormContext();
+  const { setRefreshKey } = useRefreshKeyContext();
   const [newFieldName, setNewFieldName] = useState("");
 
   const addField = () => {

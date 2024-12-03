@@ -1,9 +1,9 @@
 'use client';
 
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { mandatorySections, PreviewIcons } from "@/lib/cvFields";
-import { FormContext } from "@/contexts/cvForm";
-import { FormRefreshContext } from "@/contexts/cvFormRefresh";
+import { useFormContext } from "@/contexts/cvForm";
+import { useRefreshKeyContext } from "@/contexts/cvFormRefresh";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import RichTextEditor from "@/components/cv/rich-text-editor"
@@ -11,8 +11,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { PlusCircle, Trash2 } from "lucide-react";
 
 export default function CvSections () {
-  const { sections, setSections } = useContext(FormContext)
-  const { setRefreshKey } = useContext(FormRefreshContext);
+  const { sections, setSections } = useFormContext();
+  const { setRefreshKey } = useRefreshKeyContext();
   const [newSectionTitle, setNewSectionTitle] = useState("")
 
   const addSection = () => {
