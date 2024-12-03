@@ -103,11 +103,12 @@ export const defaultSections = [
 ]
 
 const nameDelimiterRegex = /[\s.,\-_]+/;
+const wordLimit = 4;
 
-const getInitials = (fullName: string | undefined) =>
-  fullName?.split(nameDelimiterRegex, 4)?.map((string) =>
+export const getInitials = (fullName: string | undefined) =>
+  fullName?.split(nameDelimiterRegex, wordLimit)?.map((string) =>
     string?.[0]?.toLocaleUpperCase()
-  )?.join('')
+  )?.join('');
 
 export function getValuesFromFields (fields: Field[]) {
   const nameField = fields?.find((field) =>

@@ -20,9 +20,9 @@ import {
 } from "@radix-ui/react-icons"
 
 import ReactMarkdown from 'react-markdown'
-// import remarkGfm from 'remark-gfm' // remove from dependencies
+// import remarkGfm from 'remark-gfm' // TODO: remove from dependencies
+import { usePersonalInfoContext } from "@/contexts/cvPersonalInfo"
 
-import { getValuesFromFields } from "@/lib/cvFields"
 const ModernIcons: Record<string, React.ReactNode> = {
   [PreviewIcons.file]: <FileIcon className="h-3 w-3" />,
   // [PreviewIcons.window]: 'window',
@@ -49,7 +49,8 @@ const nonSwapyFieldNames = [FieldNames.Name, FieldNames.Title]
 export default function ModernCvTemplate ({ items }: { items: (Field | Section)[] }) {
   const fields = items.filter((item): item is Field => item.type === 'field');
   const sections = items.filter((item): item is Section => item.type === 'section');
-  const { fullName, initials, jobTitle } = getValuesFromFields(fields)
+
+  const { fullName, initials, jobTitle } = usePersonalInfoContext();
 
   return (
     <div className="min-h-screen bg-gray-100 p-4 dark:bg-gray-900">

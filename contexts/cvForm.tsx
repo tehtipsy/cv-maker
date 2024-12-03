@@ -53,6 +53,5 @@ export const FormContextProvider = (props: FormContextProviderProps) => {
   );
 };
 
-export const useFormContext = () => {
-  return useContext(FormContext);
-};
+export const useFormContext = () =>
+  useContext(FormContext);

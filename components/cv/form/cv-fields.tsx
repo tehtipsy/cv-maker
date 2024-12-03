@@ -1,16 +1,18 @@
 'use client';
 
 import { useState } from "react";
-import { mandatoryFields, PreviewIcons } from "@/lib/cvFields";
+import { FieldNames, mandatoryFields, PreviewIcons } from "@/lib/cvFields";
 import { useFormContext } from "@/contexts/cvForm";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { PlusCircle, Trash2 } from "lucide-react";
 import { useRefreshKeyContext } from "@/contexts/cvFormRefresh";
+import { usePersonalInfoContext } from "@/contexts/cvPersonalInfo";
 
 export default function CvFields () {
   const { fields, setFields } = useFormContext();
   const { setRefreshKey } = useRefreshKeyContext();
+  const { setFullName, setJobTitle } = usePersonalInfoContext()
   const [newFieldName, setNewFieldName] = useState("");
 
   const addField = () => {
@@ -46,7 +48,17 @@ export default function CvFields () {
           <Input
             type="text"
             value={field.value}
-            onChange={(e) => updateFieldValue(field.id, e.target.value)}
+            onChange={(e) => {
+              switch (field.name) {
+                case FieldNames.Name:
+                  setFullName(e.target.value);
+                  break;
+                case FieldNames.Title:
+                  setJobTitle(e.target.value);
+                  break;
+              };
+              updateFieldValue(field.id, e.target.value);
+            }}
             placeholder={field.name}
             onKeyDown={(e) => {
               if (e.key === 'Enter') {

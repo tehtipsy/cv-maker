@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button'
 import { useSwapyMapContext } from '@/contexts/cvPreviewOrdering'
 import Image from 'next/image'
 import { useFormContext } from '@/contexts/cvForm'
-import ModernCvTemplate from './templates/modern-cv';
+import ModernCvTemplate from '@/components/cv/templates/modern-cv';
 
 export type PreviewTemplateProps = {
   fields: Field[]
@@ -29,9 +29,9 @@ export default function CvPreview () {
     setIsMounted(true)
   }, [])
 
-  useEffect(() => {
-    console.log('Items Ordering: ', map, setMap)
-  })
+  // useEffect(() => {
+  //   console.log('Items Ordering: ', map, setMap)
+  // })
 
   useEffect(() => {
     if (mapRef.current) {

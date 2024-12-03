@@ -31,6 +31,5 @@ export const FormRefreshContextProvider = (props: FormRefreshContextProviderProp
   );
 };
 
-export const useRefreshKeyContext = () => {
-  return useContext(FormRefreshContext)
-}
+export const useRefreshKeyContext = () =>
+  useContext(FormRefreshContext);

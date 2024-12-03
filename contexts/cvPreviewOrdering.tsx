@@ -33,6 +33,5 @@ export const OrderingContextProvider = (props: OrderingContextProviderProps) => 
   );
 };
 
-export const useSwapyMapContext = () => {
-  return useContext(OrderingContext);
-};
+export const useSwapyMapContext = () =>
+  useContext(OrderingContext);
