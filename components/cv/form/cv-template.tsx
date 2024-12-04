@@ -1,6 +1,6 @@
 'use client';
 
-import { Template, TemplateTypes } from "@/lib/cvFields"
+import { Template, TemplateTypes } from "@/types/cvForm"
 import { useFormContext } from "@/contexts/cvForm"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"

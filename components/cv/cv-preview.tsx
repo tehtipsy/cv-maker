@@ -1,6 +1,6 @@
 'use client';
 
-import { TemplateTypes, type Field, type Section } from '@/lib/cvFields'
+import { Field, Section, TemplateTypes } from "@/types/cvForm"
 import { useEffect, useRef, useState } from 'react'
 import { createSwapy, type Swapy } from 'swapy'
 import { Button } from '@/components/ui/button'
@@ -92,9 +92,9 @@ export default function CvPreview () {
       case TemplateTypes.professional:
         return <ModernCvTemplate items={items} />;
       case TemplateTypes.creative:
-        return <CreativeProfessionalCv />;
+        return <CreativeProfessionalCv items={items} />;
       case TemplateTypes.academic:
-        return <TraditionalCv />;
+        return <TraditionalCv items={items} />;
       // default:
       //   return <span>Unknown</span>;
     }

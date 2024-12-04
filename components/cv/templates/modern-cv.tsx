@@ -1,52 +1,22 @@
-'use client'
+'use client';
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Separator } from "@/components/ui/separator"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Separator } from "@/components/ui/separator";
+import { CvPreviewProps, Field, FieldNames, Section } from "@/types/cvForm";
 
-import { Field, FieldNames, PreviewIcons, Section } from "@/lib/cvFields"
+import ReactMarkdown from 'react-markdown';
+// import remarkGfm from 'remark-gfm' // TODO: remove from dependencies;
 
-import { MapPin } from "lucide-react"
-import {
-  LinkedInLogoIcon,
-  MobileIcon,
-  EnvelopeClosedIcon,
-  InstagramLogoIcon,
-  GitHubLogoIcon,
-  GlobeIcon,
-  VercelLogoIcon,
-  FileIcon
-} from "@radix-ui/react-icons"
+import { usePersonalInfoContext } from "@/contexts/cvPersonalInfo";
+import { ModernIcons } from "@/components/cv/templates/preview-template-icons";
 
-import ReactMarkdown from 'react-markdown'
-// import remarkGfm from 'remark-gfm' // TODO: remove from dependencies
-import { usePersonalInfoContext } from "@/contexts/cvPersonalInfo"
+const nonSwapyFieldNames = [FieldNames.Name, FieldNames.Title];
 
-const ModernIcons: Record<string, React.ReactNode> = {
-  [PreviewIcons.file]: <FileIcon className="h-3 w-3" />,
-  // [PreviewIcons.window]: 'window',
-  [PreviewIcons.globe]: <GlobeIcon className="h-3 w-3" />,
-  // [PreviewIcons.next]: 'next',
-  [PreviewIcons.vercel]: <VercelLogoIcon className="h-3 w-3" />,
-  [PreviewIcons.email]: <EnvelopeClosedIcon className="h-3 w-3" />,
-  [PreviewIcons.location]: <MapPin className="h-3 w-3" />,
-  [PreviewIcons.phone]: <MobileIcon className="h-3 w-3" />,
-  // [PreviewIcons.hat]: 'hat',
-  [PreviewIcons.github]: <GitHubLogoIcon className="h-3 w-3" />,
-  // [PreviewIcons.facebook]: <svg xmlns="http://www.w3.org/2000/svg" height="10" width="10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-facebook"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>,
-  [PreviewIcons.insta]: <InstagramLogoIcon className="h-3 w-3" />,
-  [PreviewIcons.linked]: <LinkedInLogoIcon className="h-3 w-3" />,
-  // [PreviewIcons.telegram]: 'telegram',
-  // [PreviewIcons.cert]: 'cert',
-  // [PreviewIcons.locked]: 'locked',
-  // [PreviewIcons.unlocked]: 'unlocked',
-  // [PreviewIcons.user]: 'user',
-}
-
-const nonSwapyFieldNames = [FieldNames.Name, FieldNames.Title]
-
-export default function ModernCvTemplate ({ items }: { items: (Field | Section)[] }) {
+export default function ModernCvTemplate ({ items }: CvPreviewProps) {
+  // TODO: render ALL items in order, slice using fieldsLength
+  // const fieldsLength = items.filter((item): item is Field => item.type === 'field').length;
   const fields = items.filter((item): item is Field => item.type === 'field');
   const sections = items.filter((item): item is Section => item.type === 'section');
 

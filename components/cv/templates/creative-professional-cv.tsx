@@ -9,13 +9,24 @@ import { Mail, Phone, MapPin, ChevronDown } from 'lucide-react'
 import { LinkedInLogoIcon, GitHubLogoIcon } from "@radix-ui/react-icons"
 
 import Image from 'next/image'
+import { CvPreviewProps, Field, Section } from '@/types/cvForm';
+import { usePersonalInfoContext } from '@/contexts/cvPersonalInfo';
 
-export function CreativeProfessionalCv () {
+// TODO: drill da props
+export function CreativeProfessionalCv ({ items }: CvPreviewProps) {
   const [expandedSection, setExpandedSection] = useState<string | null>(null)
 
   const toggleSection = (section: string) => {
     setExpandedSection(expandedSection === section ? null : section)
   }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const fields = items.filter((item): item is Field => item.type === 'field');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const sections = items.filter((item): item is Section => item.type === 'section');
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { fullName, initials, jobTitle } = usePersonalInfoContext();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-teal-100 to-blue-100 p-8">

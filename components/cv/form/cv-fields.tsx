@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from "react";
-import { FieldNames, mandatoryFields, PreviewIcons } from "@/lib/cvFields";
+import { PreviewIcons, FieldNames } from "@/types/cvForm";
+import { mandatoryFields } from "@/lib/cv/cvFields";
 import { useFormContext } from "@/contexts/cvForm";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";

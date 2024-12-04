@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
-import { getInitials } from "@/lib/cvFields";
+import { getInitials } from "@/lib/cv/cvFields";
 
 type PersonalInfoContextProps = {
   fullName: string

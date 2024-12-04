@@ -5,8 +5,17 @@ import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { Mail, Phone, MapPin } from 'lucide-react'
 import Image from 'next/image'
+import { CvPreviewProps } from "@/types/cvForm";
+import { usePersonalInfoContext } from "@/contexts/cvPersonalInfo";
 
-export function TraditionalCv () {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function TraditionalCv ({ items }: CvPreviewProps) {
+  // const fieldsLength = items.filter((item): item is Field => item.type === 'field').length;
+  // const sections = items.filter((item): item is Section => item.type === 'section');
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { fullName, initials, jobTitle } = usePersonalInfoContext();
+
   return (
     <div className="min-h-screen bg-gray-100 p-8">
       <Card className="w-full max-w-4xl mx-auto overflow-hidden bg-white shadow-lg">

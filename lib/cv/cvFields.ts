@@ -1,62 +1,4 @@
-export type Field = {
-  type: string
-  id: string
-  name: string
-  value: string
-  icon: string
-}
-
-export type Section = {
-  type: string
-  id: string
-  title: string
-  content: string
-  icon: string
-}
-
-export enum TemplateTypes {
-  professional = 'professional',
-  creative = 'creative',
-  academic = 'academic',
-}
-
-export type Template = TemplateTypes
-
-export enum PreviewIcons {
-  file = '/file.svg',
-  window = '/window.svg',
-  globe = '/globe.svg',
-  next = '/next.svg',
-  vercel = '/vercel.svg',
-  email = '/email.svg',
-  location = '/location.svg',
-  phone = '/phone.svg',
-  tealRect = '/teal-rect.svg',
-  hat = '/hat.svg',
-  github = '/github.svg',
-  facebook = '/facebook.svg',
-  insta = '/insta.svg',
-  linked = '/linkedin.svg',
-  telegram = '/telegram.svg',
-  cert = '/cert.svg',
-  locked = '/locked.svg',
-  unlocked = '/unlocked.svg',
-  user = '/user.svg',
-}
-
-export enum FieldNames {
-  Name = 'Full Name',
-  Title = 'Job Title',
-  Email = 'Email',
-  Phone = 'Phone',
-  Location = 'Location',
-  Git = 'Git',
-  Meta = 'Facebook',
-  Instagram = 'Instagram',
-  Linkedin = 'LinkedIn',
-  Telegram = 'Telegram',
-  Website = 'Website',
-}
+import { FieldNames, PreviewIcons, SectionNames } from "@/types/cvForm"
 
 export const mandatoryFields = [
   { type: "field", id: "1", name: FieldNames.Name, value: "", icon: PreviewIcons.user },
@@ -80,13 +22,6 @@ export const defaultFields = [
   ...optionalFields
 ]
 
-export enum SectionNames {
-  Summary = 'Summary',
-  Experience = 'Experience',
-  Education = 'Education',
-  Certifications = 'Certifications',
-}
-
 export const mandatorySections = [
   { type: "section", id: "b", title: SectionNames.Experience, content: "", icon: PreviewIcons.file },
   { type: "section", id: "c", title: SectionNames.Education, content: "", icon: PreviewIcons.hat },
@@ -109,18 +44,3 @@ export const getInitials = (fullName: string | undefined) =>
   fullName?.split(nameDelimiterRegex, wordLimit)?.map((string) =>
     string?.[0]?.toLocaleUpperCase()
   )?.join('');
-
-export function getValuesFromFields (fields: Field[]) {
-  const nameField = fields?.find((field) =>
-    field.name === FieldNames.Name
-  )
-  const fullName = nameField?.value
-  const initials = getInitials(fullName)
-
-  const titleField = fields?.find((field) =>
-    field.name === FieldNames.Title
-  )
-  const jobTitle = titleField?.value
-
-  return { fullName, initials, jobTitle }
-}

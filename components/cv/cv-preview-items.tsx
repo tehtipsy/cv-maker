@@ -1,6 +1,6 @@
 'use client';
 
-import type { Field, Section } from "@/lib/cvFields"
+import type { Field, Section } from "@/types/cvForm"
 import Image from 'next/image'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'

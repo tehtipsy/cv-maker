@@ -1,6 +1,7 @@
-'use client'
+'use client';
 
-import { defaultFields, defaultSections, Field, Section, Template, TemplateTypes } from "@/lib/cvFields";
+import { Field, Section, Template, TemplateTypes } from "@/types/cvForm";
+import { defaultFields, defaultSections } from "@/lib/cv/cvFields";
 import { createContext, ReactNode, useContext, useState } from "react";
 
 type FormContextProps = {
