@@ -1,6 +1,6 @@
 'use client';
 
-import { Field, Section, TemplateTypes } from "@/types/cvForm"
+import { CvItem, TemplateTypes } from "@/types/cvForm"
 import { useEffect, useRef, useState } from 'react'
 import { createSwapy, type Swapy } from 'swapy'
 import { Button } from '@/components/ui/button'
@@ -9,12 +9,12 @@ import { useSwapyMapContext } from '@/contexts/cvPreviewOrdering'
 import Image from 'next/image'
 import { useFormContext } from '@/contexts/cvForm'
 import ModernCvTemplate from '@/components/cv/templates/modern-cv';
-import { CreativeProfessionalCv } from '@/components/cv/templates/creative-professional-cv';
-import { TraditionalCv } from '@/components/cv/templates/traditional-cv';
+import CreativeProfessionalCv from '@/components/cv/templates/creative-professional-cv';
+import TraditionalCv from '@/components/cv/templates/traditional-cv';
 
 export default function CvPreview () {
   const { fields, sections, template } = useFormContext();
-  const [items, setItems] = useState<(Field | Section)[]>([...fields, ...sections])
+  const [items, setItems] = useState<CvItem[]>([...fields, ...sections])
   const [isUnlocked, setIsUnlocked] = useState(true)
   const [isMounted, setIsMounted] = useState(false)
   const { map, setMap } = useSwapyMapContext()
@@ -87,7 +87,7 @@ export default function CvPreview () {
     }
   }, [isUnlocked])
 
-  const templateType = (template: TemplateTypes, items: (Field | Section)[]) => {
+  const templateType = (template: TemplateTypes, items: CvItem[]) => {
     switch (template) {
       case TemplateTypes.professional:
         return <ModernCvTemplate items={items} />;

@@ -64,6 +64,8 @@ export enum SectionNames {
   Certifications = 'Certifications',
 }
 
+export type CvItem = Field | Section
+
 export type CvPreviewProps = {
-  items: (Field | Section)[]
+  items: CvItem[]
 }

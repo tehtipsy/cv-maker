@@ -9,7 +9,7 @@ import { CvPreviewProps } from "@/types/cvForm";
 import { usePersonalInfoContext } from "@/contexts/cvPersonalInfo";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function TraditionalCv ({ items }: CvPreviewProps) {
+export default function TraditionalCv ({ items }: CvPreviewProps) {
   // const fieldsLength = items.filter((item): item is Field => item.type === 'field').length;
   // const sections = items.filter((item): item is Section => item.type === 'section');
 

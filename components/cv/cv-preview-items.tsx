@@ -1,6 +1,6 @@
 'use client';
 
-import type { Field, Section } from "@/types/cvForm"
+import type { CvItem, Field, Section } from "@/types/cvForm"
 import Image from 'next/image'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
@@ -14,7 +14,7 @@ type CvSectionPreviewProps = {
 }
 
 type CvRenderItemProps = {
-  item: Field | Section
+  item: CvItem
 }
 
 const CvFieldPreview: React.FC<CvFieldPreviewProps> = ({ item }) => { 

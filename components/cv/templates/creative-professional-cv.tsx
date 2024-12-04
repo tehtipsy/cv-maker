@@ -13,7 +13,7 @@ import { CvPreviewProps, Field, Section } from '@/types/cvForm';
 import { usePersonalInfoContext } from '@/contexts/cvPersonalInfo';
 
 // TODO: drill da props
-export function CreativeProfessionalCv ({ items }: CvPreviewProps) {
+export default function CreativeProfessionalCv ({ items }: CvPreviewProps) {
   const [expandedSection, setExpandedSection] = useState<string | null>(null)
 
   const toggleSection = (section: string) => {
