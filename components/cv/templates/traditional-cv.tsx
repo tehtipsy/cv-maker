@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -6,7 +6,7 @@ import { Separator } from "@/components/ui/separator"
 import { Mail, Phone, MapPin } from 'lucide-react'
 import Image from 'next/image'
 
-export function TraditionalCv() {
+export function TraditionalCv () {
   return (
     <div className="min-h-screen bg-gray-100 p-8">
       <Card className="w-full max-w-4xl mx-auto overflow-hidden bg-white shadow-lg">
@@ -16,6 +16,8 @@ export function TraditionalCv() {
               <div className="space-y-6">
                 <Image 
                   src="/placeholder.svg?height=300&width=300" 
+                  width={300}
+                  height={300}
                   alt="Jane Professional" 
                   className="w-32 h-32 rounded-full mx-auto border-4 border-white shadow-md"
                 />

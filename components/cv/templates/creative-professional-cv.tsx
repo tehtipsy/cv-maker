@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
@@ -10,7 +10,7 @@ import { LinkedInLogoIcon, GitHubLogoIcon } from "@radix-ui/react-icons"
 
 import Image from 'next/image'
 
-export function CreativeProfessionalCv() {
+export function CreativeProfessionalCv () {
   const [expandedSection, setExpandedSection] = useState<string | null>(null)
 
   const toggleSection = (section: string) => {
@@ -29,6 +29,8 @@ export function CreativeProfessionalCv() {
                     <Image 
                       src="/placeholder.svg?height=300&width=300" 
                       alt="Jane Professional" 
+                      width={300}
+                      height={300}
                       className="object-cover w-full h-full"
                     />
                   </div>

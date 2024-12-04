@@ -1,6 +1,6 @@
 'use client';
 
-import type { Field, Section } from '@/lib/cvFields'
+import { TemplateTypes, type Field, type Section } from '@/lib/cvFields'
 import { useEffect, useRef, useState } from 'react'
 import { createSwapy, type Swapy } from 'swapy'
 import { Button } from '@/components/ui/button'
@@ -9,11 +9,8 @@ import { useSwapyMapContext } from '@/contexts/cvPreviewOrdering'
 import Image from 'next/image'
 import { useFormContext } from '@/contexts/cvForm'
 import ModernCvTemplate from '@/components/cv/templates/modern-cv';
-
-export type PreviewTemplateProps = {
-  fields: Field[]
-  sections: Section[]
-}
+import { CreativeProfessionalCv } from '@/components/cv/templates/creative-professional-cv';
+import { TraditionalCv } from '@/components/cv/templates/traditional-cv';
 
 export default function CvPreview () {
   const { fields, sections, template } = useFormContext();
@@ -90,54 +87,40 @@ export default function CvPreview () {
     }
   }, [isUnlocked])
 
-  return (
-    <div className={`p-6 border rounded-lg ${template === 'professional' ? 'bg-white' :
-      template === 'creative' ? 'bg-gray-100' :
-        'bg-blue-50'
-      }`}>
-      <h2 className="text-2xl font-bold mb-4">CV Preview</h2>
-      <div
-        ref={containerRef}
-        className="relative space-y-4"
-      >
-        {/* {items && [...items]
-          .map((item, index) => {
-            return (
-              <div
-                key={`${index}-slot-key`}
-                data-swapy-slot={index}
-                className="p-2 border border-transparent hover:border-gray-200 rounded-lg transition-colors duration-200"
-              >
-                <div
-                  key={`${item.id}-${'title' in item ? item.title : item.name}-item-key`}
-                  data-swapy-item={item.id}
-                >
-                  <RenderPreviewItem item={item} />
-                </div>
-              </div>
-            )
-          })
-        } */}
-        <ModernCvTemplate
-          // fields={fields}
-          // sections={sections}
-          items={items}
-        />
-      </div>
+  const templateType = (template: TemplateTypes, items: (Field | Section)[]) => {
+    switch (template) {
+      case TemplateTypes.professional:
+        return <ModernCvTemplate items={items} />;
+      case TemplateTypes.creative:
+        return <CreativeProfessionalCv />;
+      case TemplateTypes.academic:
+        return <TraditionalCv />;
+      // default:
+      //   return <span>Unknown</span>;
+    }
+  }
 
-      <Button
-        onClick={() => setIsUnlocked(!isUnlocked)}
-        className="mt-4 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-      >
-        <Image
-          className="dark:invert"
-          src={isUnlocked ? '/unlocked.svg' : '/locked.svg'}
-          alt={isUnlocked ? 'Lock' : 'Unlock'}
-          width={16}
-          height={16}
-        />
-        {isUnlocked ? 'Lock' : 'Unlock'} Arrangement
-      </Button>
+  return (
+    <div className={`p-6 border rounded-lg`}>
+      <div className='flex flex-row items-center justify-center'>
+        <h3 className="font-semibold m-4">CV Preview</h3>
+        <Button
+          onClick={() => setIsUnlocked(!isUnlocked)}
+          className="m-4 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+        >
+          <Image
+            className="dark:invert"
+            src={isUnlocked ? '/unlocked.svg' : '/locked.svg'}
+            alt={isUnlocked ? 'Lock' : 'Unlock'}
+            width={16}
+            height={16}
+          />
+          {isUnlocked ? 'Lock' : 'Unlock'} Arrangement
+        </Button>
+      </div>
+      <div ref={containerRef} className="relative space-y-4">
+        {items && template && templateType(template, items)}
+      </div>
     </div>
   )
 }
